@@ -14,7 +14,7 @@ public class TeamController {
     @Autowired
     TeamService service;
 
-    @GetMapping("/teams")
+    @GetMapping("/team")
     public List<Team> getAllTeams(){
         return service.getAllTeams();
     }
@@ -33,5 +33,10 @@ public class TeamController {
     @DeleteMapping("/team/{teamId}")
     public void deleteTeam(@PathVariable int teamId){
         service.deletePlayer(teamId);
+    }
+
+    @PutMapping("/team/{teamId}/player/{playerId}")
+    public void assignPlayerToTeam(@PathVariable int teamId,@PathVariable int playerId){
+        service.assignPlayertoTeam(teamId,playerId);
     }
 }
