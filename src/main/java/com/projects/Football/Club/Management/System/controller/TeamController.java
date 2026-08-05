@@ -32,11 +32,19 @@ public class TeamController {
     }
     @DeleteMapping("/team/{teamId}")
     public void deleteTeam(@PathVariable int teamId){
-        service.deletePlayer(teamId);
+        service.deleteTeam(teamId);
     }
 
-    @PutMapping("/team/{teamId}/player/{playerId}")
+    @PutMapping("/team/assignPlayer/{teamId}/{playerId}")
     public void assignPlayerToTeam(@PathVariable int teamId,@PathVariable int playerId){
         service.assignPlayertoTeam(teamId,playerId);
+    }
+    @PutMapping("/team/removePlayerFromTeam/{teamId}/{playerId}")
+    public void removePlayerFromTeam(@PathVariable int teamId,@PathVariable int playerId){
+        service.removePlayerFromTeam(teamId,playerId);
+    }
+    @PutMapping("/team/transferPlayer/{teamId1}/{teamId2}/{playerId}")
+    public void transferPlayer(@PathVariable int teamId1,@PathVariable int teamId2,@PathVariable int playerId){
+        service.transferPlayer(teamId1,teamId2,playerId);
     }
 }

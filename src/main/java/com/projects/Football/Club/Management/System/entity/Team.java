@@ -1,5 +1,6 @@
 package com.projects.Football.Club.Management.System.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,5 +29,6 @@ public class Team {
     private String headCoach;
 
     @OneToMany(mappedBy = "team", fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<Player> players;
 }

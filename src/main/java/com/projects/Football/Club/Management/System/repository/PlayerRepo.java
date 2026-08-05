@@ -6,4 +6,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PlayerRepo extends JpaRepository<Player,Integer> {
+    boolean existsByTeamIdAndJerseyNumber(
+            int teamId,
+            int jerseyNumber
+    );
 }
