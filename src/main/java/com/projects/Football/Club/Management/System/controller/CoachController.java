@@ -38,4 +38,5 @@ public class CoachController {
     public void deleteCoach(@PathVariable int coachId){
         coachService.deleteCoach(coachId);
     }
+
 }

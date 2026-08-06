@@ -32,6 +32,8 @@ public class CoachService {
     }
 
     public void deleteCoach(int coachId) {
+        Coach coach = coachRepo.findById(coachId).orElseThrow();
+        if(coach.getTeam() == null)
         coachRepo.deleteById(coachId);
     }
 }

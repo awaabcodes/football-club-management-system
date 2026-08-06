@@ -14,11 +14,15 @@ public class Coach {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
+    @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
     private String email;
 
+    @Column(nullable = false)
     private  double experienceYears;
+
 
     @OneToOne
     @JoinColumn(name = "team_id")
