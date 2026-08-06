@@ -31,4 +31,7 @@ public class Team {
     @OneToMany(mappedBy = "team", fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Player> players;
+
+    @OneToOne(mappedBy = "team", fetch = FetchType.LAZY)
+    private Coach coach;
 }
