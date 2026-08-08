@@ -19,6 +19,7 @@ public class SquadEntry {
     @JoinColumn(name = "squad_id")
     private Squad squad;
 
+
     @ManyToOne
     @JoinColumn(name = "player_id")
     private Player player;
@@ -27,6 +28,8 @@ public class SquadEntry {
 }
 
 enum SquadRole{
-        STARTER,
-        SUBSTITUTE
+    @Enumerated(EnumType.STRING)
+    STARTER,
+    @Enumerated(EnumType.STRING)
+    SUBSTITUTE
 }

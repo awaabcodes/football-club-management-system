@@ -35,4 +35,8 @@ public class Player {
     @JoinColumn(name = "team_id")
     @JsonBackReference
     private Team team;
+
+    @OneToMany(mappedBy = "player")
+    @JoinColumn(name = "squad_id")
+    private SquadEntry squadEntry;
 }
