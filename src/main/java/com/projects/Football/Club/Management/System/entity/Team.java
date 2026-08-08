@@ -34,4 +34,8 @@ public class Team {
 
     @OneToOne(mappedBy = "team", fetch = FetchType.LAZY)
     private Coach coach;
+
+    @OneToOne(mappedBy = "team", fetch = FetchType.LAZY)
+    private Squad squad;
+
 }
