@@ -21,5 +21,5 @@ public class Squad {
     private Team team;
 
     @OneToMany(mappedBy = "squad", fetch = FetchType.LAZY)
-    private List<SquadEntry> squad;
+    private List<SquadEntry> squadEntries;
 }

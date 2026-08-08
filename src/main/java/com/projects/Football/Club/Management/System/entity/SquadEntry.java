@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"squad_id", "player_id"}))
 public class SquadEntry {
 
     @Id
@@ -24,12 +25,11 @@ public class SquadEntry {
     @JoinColumn(name = "player_id")
     private Player player;
 
+    @Enumerated(EnumType.STRING)
     private SquadRole role;
 }
 
 enum SquadRole{
-    @Enumerated(EnumType.STRING)
     STARTER,
-    @Enumerated(EnumType.STRING)
     SUBSTITUTE
 }
