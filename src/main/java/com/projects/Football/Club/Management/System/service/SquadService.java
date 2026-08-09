@@ -39,20 +39,19 @@ public class SquadService {
             return;
         if (!squadSizeCheck(squadEntry))
             return;
-        if (!(squadEntry.getRole().equals(SquadRole.STARTER)))
-            return;
+        if (squadEntry.getRole().equals(SquadRole.STARTER)){
         if (!checkStarterPlayersLimit(squadEntry))
             return;
         if (checkSubPlayersLimit(squadEntry)) {
             squadEntry.getSquad().getSquadEntries().add(squadEntry);
             saveSquadEntry(squadEntry);
         }
+        }
 
 
     }
 
     public void removePlayer(int squadEntryId) {
-        squadEntryRepo.findById(squadEntryId).orElseThrow().getSquad().getSquadEntries().remove(squadEntryRepo.findById(squadEntryId).orElseThrow());
         squadEntryRepo.deleteById(squadEntryId);
 
     }
