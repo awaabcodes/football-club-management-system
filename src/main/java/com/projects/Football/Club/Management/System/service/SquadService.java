@@ -3,10 +3,14 @@ package com.projects.Football.Club.Management.System.service;
 import com.projects.Football.Club.Management.System.entity.Squad;
 import com.projects.Football.Club.Management.System.entity.SquadEntry;
 import com.projects.Football.Club.Management.System.entity.SquadRole;
+import com.projects.Football.Club.Management.System.entity.Team;
 import com.projects.Football.Club.Management.System.repository.SquadEntryRepo;
 import com.projects.Football.Club.Management.System.repository.SquadRepo;
+import com.projects.Football.Club.Management.System.repository.TeamRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 
 @Service
 public class SquadService {
@@ -17,20 +21,27 @@ public class SquadService {
     @Autowired
     SquadEntryRepo squadEntryRepo;
 
+    @Autowired
+    TeamRepo teamRepo;
 
     // controller linked methods
-    public void createSquad() {
-        squadRepo.save(new Squad());
+    public void createSquad(int teamId) {
+        Team team = teamRepo.findById(teamId).orElseThrow();
+        Squad squad = new Squad();
+        squad.setTeam(team);
+        squad.setSquadEntries(new ArrayList<>());
+
+        squadRepo.save(squad);
     }
 
     public void addPlayer(SquadEntry squadEntry) {
-        if (checkTeamMemberShip(squadEntry))
+        if (!checkTeamMemberShip(squadEntry))
             return;
-        if (squadSizeCheck(squadEntry))
+        if (!squadSizeCheck(squadEntry))
             return;
-        if (squadEntry.getRole() == SquadRole.STARTER)
+        if (!(squadEntry.getRole().equals(SquadRole.STARTER)))
             return;
-        if (checkStarterPlayersLimit(squadEntry))
+        if (!checkStarterPlayersLimit(squadEntry))
             return;
         if (checkSubPlayersLimit(squadEntry)) {
             squadEntry.getSquad().getSquadEntries().add(squadEntry);
@@ -40,16 +51,9 @@ public class SquadService {
 
     }
 
-
     public void removePlayer(int squadEntryId) {
-        SquadEntry squadEntry = squadEntryRepo.findById(squadEntryId).orElseThrow();
-        for (SquadEntry s : squadEntry.getSquad().getSquadEntries()) {
-            if (s.getSquad().equals(squadEntry.getSquad())) {
-                squadEntry.getSquad().getSquadEntries().remove(squadEntry);
-                saveSquadEntry(squadEntry);
-            }
-        }
-
+        squadEntryRepo.findById(squadEntryId).orElseThrow().getSquad().getSquadEntries().remove(squadEntryRepo.findById(squadEntryId).orElseThrow());
+        squadEntryRepo.deleteById(squadEntryId);
 
     }
 

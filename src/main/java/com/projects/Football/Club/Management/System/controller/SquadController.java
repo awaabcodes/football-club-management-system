@@ -12,9 +12,9 @@ public class SquadController {
     @Autowired
     SquadService squadService;
 
-    @PostMapping
-    public void createSquad(){
-        squadService.createSquad();
+    @PostMapping("/{teamId}")
+    public void createSquad(@PathVariable int teamId){
+        squadService.createSquad(teamId);
     }
     @PutMapping("/player")
     public void addPlayer(@RequestBody SquadEntry squadEntry){
