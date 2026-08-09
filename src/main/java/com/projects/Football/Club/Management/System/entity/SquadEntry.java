@@ -5,12 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.function.Predicate;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"squad_id", "player_id"}))
-public class SquadEntry {
+public class SquadEntry{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +22,6 @@ public class SquadEntry {
     @JoinColumn(name = "squad_id")
     private Squad squad;
 
-
     @ManyToOne
     @JoinColumn(name = "player_id")
     private Player player;
@@ -29,7 +30,3 @@ public class SquadEntry {
     private SquadRole role;
 }
 
-enum SquadRole{
-    STARTER,
-    SUBSTITUTE
-}
