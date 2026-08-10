@@ -2,6 +2,7 @@ package com.projects.Football.Club.Management.System.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,15 +20,21 @@ public class Player {
     private Long id;
 
 
+    @NotBlank
     @Column(nullable = false)
     private String name;
 
+    @Min(15)
+    @Max(45)
     @Column(nullable = false)
     private int age;
 
+    @NotNull
     @Column(nullable = false)
-    private String position;
+    private Position position;
 
+    @Positive
+    @Max(99)
     @Column(nullable = false)
     private int jerseyNumber;
 

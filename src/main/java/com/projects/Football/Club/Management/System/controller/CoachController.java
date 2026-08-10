@@ -2,6 +2,7 @@ package com.projects.Football.Club.Management.System.controller;
 
 import com.projects.Football.Club.Management.System.entity.Coach;
 import com.projects.Football.Club.Management.System.service.CoachService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,12 +25,12 @@ public class CoachController {
     }
 
     @PostMapping("/coach")
-    public void addCoach(@RequestBody Coach coach){
+    public void addCoach(@Valid @RequestBody Coach coach){
         coachService.addCoach(coach);
     }
 
     @PutMapping("/coach")
-    public void updateCoach(@RequestBody Coach coach){
+    public void updateCoach(@Valid@RequestBody Coach coach){
         coachService.updateCoach(coach);
     }
 

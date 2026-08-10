@@ -2,6 +2,7 @@ package com.projects.Football.Club.Management.System.controller;
 
 import com.projects.Football.Club.Management.System.entity.Team;
 import com.projects.Football.Club.Management.System.service.TeamService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,12 +27,12 @@ public class TeamController {
     }
 
     @PostMapping("/team")
-    public void addTeam(@RequestBody Team team){
+    public void addTeam(@Valid @RequestBody Team team){
         teamService.addTeam(team);
     }
 
     @PutMapping("/team")
-    public void updateTeam(@RequestBody Team team){
+    public void updateTeam(@Valid @RequestBody Team team){
         teamService.updateTeam(team);
     }
 

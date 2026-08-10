@@ -1,6 +1,7 @@
 package com.projects.Football.Club.Management.System.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,6 +27,7 @@ public class SquadEntry{
     @JoinColumn(name = "player_id")
     private Player player;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     private SquadRole role;
 }

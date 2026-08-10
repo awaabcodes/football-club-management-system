@@ -2,6 +2,7 @@ package com.projects.Football.Club.Management.System.controller;
 
 import com.projects.Football.Club.Management.System.entity.SquadEntry;
 import com.projects.Football.Club.Management.System.service.SquadService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,7 @@ public class SquadController {
         squadService.createSquad(teamId);
     }
     @PutMapping("/player")
-    public void addPlayer(@RequestBody SquadEntry squadEntry){
+    public void addPlayer(@Valid @RequestBody SquadEntry squadEntry){
         squadService.addPlayer(squadEntry);
     }
     @DeleteMapping("/player/{squadEntryId}")
