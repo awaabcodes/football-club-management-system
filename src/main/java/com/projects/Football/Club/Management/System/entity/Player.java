@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -44,6 +46,5 @@ public class Player {
     private Team team;
 
     @OneToMany(mappedBy = "player")
-    @JoinColumn(name = "squad_id")
-    private SquadEntry squadEntry;
+    private List<SquadEntry> squadEntry;
 }
