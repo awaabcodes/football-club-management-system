@@ -5,6 +5,7 @@ import com.projects.Football.Club.Management.System.entity.Coach;
 
 import com.projects.Football.Club.Management.System.entity.Player;
 import com.projects.Football.Club.Management.System.entity.Team;
+import com.projects.Football.Club.Management.System.exception.InvalidOperation;
 import com.projects.Football.Club.Management.System.exception.ResourceNotFound;
 import com.projects.Football.Club.Management.System.repository.CoachRepo;
 import com.projects.Football.Club.Management.System.repository.TeamRepo;
@@ -30,7 +31,7 @@ public class CoachService {
     }
 
     public Coach getCoachById(int coachId) {
-        return coachRepo.findById(coachId).orElseThrow();
+        return coachRepo.findById(coachId).orElseThrow(() ->new ResourceNotFound("Coach not found with this id: " + coachId));
     }
 
     public void addCoach(Coach coach) {
@@ -42,8 +43,9 @@ public class CoachService {
     }
 
     public void deleteCoach(int coachId) {
-        Coach coach = coachRepo.findById(coachId).orElseThrow();
-        if(coach.getTeam() == null)
+        Coach coach = coachRepo.findById(coachId).orElseThrow(() ->new ResourceNotFound("Coach not found with this id: " + coachId));
+        if(coach.getTeam() != null)
+            throw new InvalidOperation("Coach with this id " + coachId + "is assigned to a team");
         coachRepo.deleteById(coachId);
     }
 
