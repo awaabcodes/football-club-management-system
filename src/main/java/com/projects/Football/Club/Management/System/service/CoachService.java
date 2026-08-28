@@ -5,6 +5,7 @@ import com.projects.Football.Club.Management.System.entity.Coach;
 
 import com.projects.Football.Club.Management.System.entity.Player;
 import com.projects.Football.Club.Management.System.entity.Team;
+import com.projects.Football.Club.Management.System.exception.DuplicateResource;
 import com.projects.Football.Club.Management.System.exception.InvalidOperation;
 import com.projects.Football.Club.Management.System.exception.ResourceNotFound;
 import com.projects.Football.Club.Management.System.repository.CoachRepo;
@@ -50,44 +51,44 @@ public class CoachService {
     }
 
     public void assignCoach(int teamId, int coachId) {
-        Team team = teamRepo.findById(teamId).orElseThrow();
-        Coach coach = coachRepo.findById(coachId).orElseThrow();
+        Team team = teamRepo.findById(teamId).orElseThrow(()->new ResourceNotFound("Team not found with this id: " + teamId));
+        Coach coach = coachRepo.findById(coachId).orElseThrow(()->new ResourceNotFound("Coach not found with this id: " + coachId));
         if (coach.getTeam() != null)
-            return;
+            throw new InvalidOperation("Coach is Already assigned to a team");
         if (team.getCoach() != null)
-            return;
+            throw new InvalidOperation("Team Already has a coach with this id "+ team.getCoach().getId());
         team.setCoach(coach);
         coach.setTeam(team);
         coachRepo.save(coach);
 
     }
     public void removeCoach(int teamId, int coachId) {
-        Team team = teamRepo.findById(teamId).orElseThrow();
-        Coach coach = coachRepo.findById(coachId).orElseThrow();
+        Team team = teamRepo.findById(teamId).orElseThrow(()->new ResourceNotFound("Team not found with this id: " + teamId));
+        Coach coach = coachRepo.findById(coachId).orElseThrow(()->new ResourceNotFound("Coach not found with this id: " + coachId));
         if (coach.getTeam() == null)
-            return;
+            throw new InvalidOperation("Coach is not assigned to any team");
         if (team.getCoach() == null)
-            return;
+            throw new InvalidOperation("Team does not have any coach to be removed");
         if(!coach.getTeam().getId().equals(team.getId()))
-            return;
+            throw new InvalidOperation("Team does not have any coach with this id "+ coachId );
         team.setCoach(null);
         coach.setTeam(null);
         coachRepo.save(coach);
     }
 
     public void transferCoach(int teamId1, int teamId2, int coachId) {
-        Team team1 = teamRepo.findById(teamId1).orElseThrow();
-        Team team2 = teamRepo.findById(teamId2).orElseThrow();
-        Coach coach = coachRepo.findById(coachId).orElseThrow();
+        Team team1 = teamRepo.findById(teamId1).orElseThrow(()->new ResourceNotFound("Team not found with this id: " + teamId1));
+        Team team2 = teamRepo.findById(teamId2).orElseThrow(()->new ResourceNotFound("Team not found with this id: " + teamId2));
+        Coach coach = coachRepo.findById(coachId).orElseThrow(()->new ResourceNotFound("Coach not found with this id: " + coachId));
 
         if(coach.getTeam() == null)
-            return;
+            throw new InvalidOperation("Coach is not assigned to any team");
         if(!coach.getTeam().getId().equals(team1.getId()))
-            return;
+            throw new InvalidOperation("Team does not have any coach with this id "+ coachId );
         if(team2.getCoach() != null)
-            return;
+            throw new InvalidOperation("Target team have a coach with this id "+ team2.getCoach().getId() );
         if(team1.getId().equals(team2.getId()))
-            return;
+            throw new DuplicateResource("You cannot transfer coach from the same to the same team");
         team1.setCoach(null);
         team2.setCoach(coach);
         coach.setTeam(team2);

@@ -25,6 +25,7 @@ public class SquadController {
     public void removePlayer(@PathVariable int squadEntryId){
         squadService.removePlayer(squadEntryId);
     }
+
     @PutMapping("/player/roles/{squadEntryid1}/{squadEntryid2}")
     public void swapRole(@PathVariable int squadEntryId1, @PathVariable int squadEntryId2){
         squadService.swapRoles(squadEntryId1,squadEntryId2);
