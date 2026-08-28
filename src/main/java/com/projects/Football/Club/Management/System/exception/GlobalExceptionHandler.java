@@ -25,4 +25,15 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
+    @ExceptionHandler(DuplicateResourceException.class)
+    public  ResponseEntity<ErrorResponse> handleDuplicateResource(DuplicateResourceException ex, WebRequest request){
+        ErrorResponse errorResponse = new ErrorResponse(
+                LocalDateTime.now(),
+                HttpStatus.CONFLICT.value(),
+                HttpStatus.CONFLICT.getReasonPhrase(),
+                ex.getMessage(),
+                request.getDescription(false).replace("uri=", "")
+        );
+        return  new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+    }
 }
