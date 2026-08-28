@@ -25,8 +25,8 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
-    @ExceptionHandler(DuplicateResourceException.class)
-    public  ResponseEntity<ErrorResponse> handleDuplicateResource(DuplicateResourceException ex, WebRequest request){
+    @ExceptionHandler(DuplicateResource.class)
+    public  ResponseEntity<ErrorResponse> handleDuplicateResource(DuplicateResource ex, WebRequest request){
         ErrorResponse errorResponse = new ErrorResponse(
                 LocalDateTime.now(),
                 HttpStatus.CONFLICT.value(),
@@ -35,5 +35,16 @@ public class GlobalExceptionHandler {
                 request.getDescription(false).replace("uri=", "")
         );
         return  new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+    }
+    @ExceptionHandler(InvalidOperation.class)
+    public  ResponseEntity<ErrorResponse> handleInvalidOperation(InvalidOperation ex, WebRequest request){
+        ErrorResponse errorResponse = new ErrorResponse(
+                LocalDateTime.now(),
+                HttpStatus.BAD_REQUEST.value(),
+                HttpStatus.BAD_REQUEST.getReasonPhrase(),
+                ex.getMessage(),
+                request.getDescription(false).replace("uri=", "")
+        );
+        return  new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 }
