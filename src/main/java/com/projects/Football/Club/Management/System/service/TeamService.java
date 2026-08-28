@@ -3,6 +3,7 @@ package com.projects.Football.Club.Management.System.service;
 
 import com.projects.Football.Club.Management.System.entity.Player;
 import com.projects.Football.Club.Management.System.entity.Team;
+import com.projects.Football.Club.Management.System.exception.ResourceNotFound;
 import com.projects.Football.Club.Management.System.repository.TeamRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,7 +22,7 @@ public class TeamService {
     }
 
     public Team getTeamById(int teamId) {
-        return repo.findById(teamId).orElse(new Team());
+        return repo.findById(teamId).orElseThrow(() -> new ResourceNotFound("Team:" + teamId + "not found"));
     }
     public void addTeam( Team team){
         repo.save(team);
@@ -31,8 +32,8 @@ public class TeamService {
     }
 
     public void deleteTeam(int teamId){
-        if(repo.existsById(teamId))
-            return;
+        if(!repo.existsById(teamId))
+            throw new ResourceNotFound("Team " + teamId + "does not exist");
         repo.deleteById(teamId);
     }
 }
