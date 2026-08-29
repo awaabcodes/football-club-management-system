@@ -31,6 +31,7 @@ public class Player {
     @Column(nullable = false)
     private int age;
 
+    @Enumerated(EnumType.STRING)
     @NotNull
     @Column(nullable = false)
     private Position position;

@@ -88,7 +88,7 @@ public class CoachService {
         if(team2.getCoach() != null)
             throw new InvalidOperation("Target team have a coach with this id "+ team2.getCoach().getId() );
         if(team1.getId().equals(team2.getId()))
-            throw new DuplicateResource("You cannot transfer coach from the same to the same team");
+            throw new InvalidOperation("You cannot transfer coach from the same to the same team");
         team1.setCoach(null);
         team2.setCoach(coach);
         coach.setTeam(team2);
