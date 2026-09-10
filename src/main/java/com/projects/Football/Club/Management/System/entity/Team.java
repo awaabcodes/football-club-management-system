@@ -25,6 +25,7 @@ public class Team {
     @Column(nullable = false)
     private String name;
 
+    @Enumerated(EnumType.STRING)
     @NotNull
     @Column(nullable = false)
     private AgeGroup ageGroup;

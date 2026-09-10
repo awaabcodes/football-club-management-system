@@ -1,6 +1,6 @@
 package com.projects.Football.Club.Management.System.config;
 
-import com.projects.Football.Club.Management.System.service.JwtService;
+import com.projects.Football.Club.Management.System.service.JwtUtil;
 import jakarta.annotation.Nonnull;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -16,21 +16,22 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    private final JwtService jwtService;
+    private final JwtUtil jwtUtil;
+
     @Override
     protected void doFilterInternal(
-            @Nonnull HttpServletResponse response,
             @Nonnull HttpServletRequest request,
+            @Nonnull HttpServletResponse response,
             @Nonnull FilterChain filterChain)
             throws ServletException, IOException {
         final String authHeader = request.getHeader("Authorization");
         final String jwt;
         final String username;
-        if(authHeader == null || !authHeader.startsWith("Bearer ")){
-            filterChain.doFilter(request,response);
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            filterChain.doFilter(request, response);
             return;
         }
         jwt = authHeader.substring(7);
-        username = jwtService.extractUsername(jwt);
+        username = jwtUtil.extractUsername(jwt);
     }
 }
