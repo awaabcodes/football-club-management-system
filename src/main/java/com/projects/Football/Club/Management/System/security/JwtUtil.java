@@ -1,4 +1,4 @@
-package com.projects.Football.Club.Management.System.service;
+package com.projects.Football.Club.Management.System.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -18,6 +18,16 @@ public class JwtUtil {
 
     private SecretKey getSignInKey() {
         return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
+    }
+
+    public String generateToken(String username, String role) {
+        return Jwts.builder()
+                .subject(username)
+                .claim("role", role)
+                .issuedAt(new Date())
+                .expiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .signWith(getSignInKey())
+                .compact();
     }
 
     public String extractUsername(String token) {

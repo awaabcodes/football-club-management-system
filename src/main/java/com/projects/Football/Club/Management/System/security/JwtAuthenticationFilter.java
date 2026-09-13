@@ -1,6 +1,5 @@
-package com.projects.Football.Club.Management.System.config;
+package com.projects.Football.Club.Management.System.security;
 
-import com.projects.Football.Club.Management.System.service.JwtUtil;
 import jakarta.annotation.Nonnull;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
