@@ -1,11 +1,10 @@
 package com.projects.Football.Club.Management.System.service;
 
-import com.projects.Football.Club.Management.System.entity.Squad;
-import com.projects.Football.Club.Management.System.entity.SquadEntry;
-import com.projects.Football.Club.Management.System.entity.SquadRole;
-import com.projects.Football.Club.Management.System.entity.Team;
+import com.projects.Football.Club.Management.System.dto.AddPlayerRequest;
+import com.projects.Football.Club.Management.System.entity.*;
 import com.projects.Football.Club.Management.System.exception.InvalidOperation;
 import com.projects.Football.Club.Management.System.exception.ResourceNotFound;
+import com.projects.Football.Club.Management.System.repository.PlayerRepo;
 import com.projects.Football.Club.Management.System.repository.SquadEntryRepo;
 import com.projects.Football.Club.Management.System.repository.SquadRepo;
 import com.projects.Football.Club.Management.System.repository.TeamRepo;
@@ -26,6 +25,9 @@ public class SquadService {
     @Autowired
     TeamRepo teamRepo;
 
+    @Autowired
+    PlayerRepo playerRepo;
+
     // controller linked methods
     public void createSquad(int teamId) {
         Team team = teamRepo.findById(teamId)
@@ -37,7 +39,17 @@ public class SquadService {
         squadRepo.save(squad);
     }
 
-    public void addPlayer(SquadEntry squadEntry) {
+    public void addPlayer(AddPlayerRequest request) {
+        Squad squad = squadRepo.findById(request.getSquadId())
+                .orElseThrow(() -> new ResourceNotFound("Squad not found with id: " + request.getSquadId()));
+        Player player = playerRepo.findById(request.getPlayerId())
+                .orElseThrow(() -> new ResourceNotFound("Player not found with id: " + request.getPlayerId()));
+
+        SquadEntry squadEntry = new SquadEntry();
+        squadEntry.setSquad(squad);
+        squadEntry.setPlayer(player);
+        squadEntry.setRole(request.getRole());
+
         validateTeamMembership(squadEntry);
         validateSquadSize(squadEntry);
 
@@ -46,7 +58,7 @@ public class SquadService {
         else
             validateSubLimit(squadEntry);
 
-        squadEntry.getSquad().getSquadEntries().add(squadEntry);
+        squad.getSquadEntries().add(squadEntry);
         saveSquadEntry(squadEntry);
     }
 
