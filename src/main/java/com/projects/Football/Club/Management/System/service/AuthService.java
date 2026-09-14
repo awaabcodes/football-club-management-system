@@ -32,7 +32,7 @@ public class AuthService {
         User user = new User();
         user.setUsername(request.getUsername());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setRole(Role.PLAYER);
+        user.setRole(Role.COACH);
         userRepo.save(user);
     }
 
