@@ -46,6 +46,6 @@ public class Player {
     @JsonBackReference
     private Team team;
 
-    @OneToMany(mappedBy = "player")
-    private List<SquadEntry> squadEntry;
+    @OneToOne(mappedBy = "player")
+    private SquadEntry squadEntry;
 }
