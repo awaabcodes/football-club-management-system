@@ -1,6 +1,7 @@
 package com.projects.Football.Club.Management.System.service;
 
 
+import com.projects.Football.Club.Management.System.dto.CoachRequest;
 import com.projects.Football.Club.Management.System.entity.Coach;
 
 import com.projects.Football.Club.Management.System.entity.Player;
@@ -11,6 +12,7 @@ import com.projects.Football.Club.Management.System.exception.ResourceNotFound;
 import com.projects.Football.Club.Management.System.repository.CoachRepo;
 import com.projects.Football.Club.Management.System.repository.TeamRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.core.support.RepositoryMethodInvocationListener;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -25,6 +27,8 @@ public class CoachService {
 
     @Autowired
     TeamRepo teamRepo;
+    @Autowired
+    private RepositoryMethodInvocationListener repositoryMethodInvocationListener;
 
 
     public List<Coach> getAllCoach() {
@@ -35,11 +39,19 @@ public class CoachService {
         return coachRepo.findById(coachId).orElseThrow(() ->new ResourceNotFound("Coach not found with this id: " + coachId));
     }
 
-    public void addCoach(Coach coach) {
+    public void addCoach(CoachRequest coachRequest) {
+        Coach coach = new Coach();
+        coach.setName(coachRequest.getName());
+        coach.setEmail(coachRequest.getEmail());
+        coach.setExperienceYears(coachRequest.getExperienceYears());
         coachRepo.save(coach);
     }
 
-    public void updateCoach(Coach coach) {
+    public void updateCoach(int coachId,CoachRequest coachRequest) {
+        Coach coach = coachRepo.findById(coachId).orElseThrow(() ->new ResourceNotFound("Coach not found with this id: " + coachId));
+        coach.setName(coachRequest.getName());
+        coach.setEmail(coachRequest.getEmail());
+        coach.setExperienceYears(coachRequest.getExperienceYears());
         coachRepo.save(coach);
     }
 

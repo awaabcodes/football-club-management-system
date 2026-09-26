@@ -1,5 +1,6 @@
 package com.projects.Football.Club.Management.System.controller;
 
+import com.projects.Football.Club.Management.System.dto.CoachRequest;
 import com.projects.Football.Club.Management.System.entity.Coach;
 import com.projects.Football.Club.Management.System.service.CoachService;
 import jakarta.validation.Valid;
@@ -25,13 +26,13 @@ public class CoachController {
     }
 
     @PostMapping("/coach")
-    public void addCoach(@Valid @RequestBody Coach coach){
-        coachService.addCoach(coach);
+    public void addCoach(@Valid @RequestBody CoachRequest coachRequest){
+        coachService.addCoach(coachRequest);
     }
 
-    @PutMapping("/coach")
-    public void updateCoach(@Valid@RequestBody Coach coach){
-        coachService.updateCoach(coach);
+    @PutMapping("/coach/{coachId}")
+    public void updateCoach(@PathVariable int coachId,@Valid@RequestBody CoachRequest coachRequest){
+        coachService.updateCoach(coachId,coachRequest);
     }
 
     @DeleteMapping("/coach/{coachId}")
