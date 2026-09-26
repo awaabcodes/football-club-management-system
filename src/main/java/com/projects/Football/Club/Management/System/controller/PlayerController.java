@@ -1,4 +1,5 @@
 package com.projects.Football.Club.Management.System.controller;
+import com.projects.Football.Club.Management.System.dto.PlayerRequest;
 import com.projects.Football.Club.Management.System.entity.Player;
 import com.projects.Football.Club.Management.System.service.PlayerService;
 import jakarta.validation.Valid;
@@ -24,13 +25,13 @@ public class PlayerController {
     }
 
     @PostMapping("/player")
-    public void addPlayer(@Valid @RequestBody Player player){
-        playerService.addPlayer(player);
+    public void addPlayer(@Valid @RequestBody PlayerRequest request){
+        playerService.addPlayer(request);
     }
 
-    @PutMapping("/player")
-    public void updatePlayer(@Valid @RequestBody Player player){
-        playerService.updatePlayer(player);
+    @PutMapping("/player/{playerId}")
+    public void updatePlayer(@PathVariable int playerId,@Valid @RequestBody PlayerRequest request){
+        playerService.updatePlayer(playerId,request);
     }
 
     @DeleteMapping("/player/{playerId}")

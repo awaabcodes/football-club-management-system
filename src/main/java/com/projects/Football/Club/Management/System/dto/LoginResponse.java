@@ -1,5 +1,8 @@
 package com.projects.Football.Club.Management.System.dto;
 
+import lombok.Getter;
+
+@Getter
 public class LoginResponse {
     private String token;
 
@@ -7,7 +10,4 @@ public class LoginResponse {
         this.token = token;
     }
 
-    public String getToken() {
-        return token;
-    }
 }

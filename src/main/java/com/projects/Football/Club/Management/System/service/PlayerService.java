@@ -1,5 +1,6 @@
 package com.projects.Football.Club.Management.System.service;
 
+import com.projects.Football.Club.Management.System.dto.PlayerRequest;
 import com.projects.Football.Club.Management.System.entity.Player;
 import com.projects.Football.Club.Management.System.entity.Team;
 import com.projects.Football.Club.Management.System.exception.DuplicateResource;
@@ -31,10 +32,21 @@ public class PlayerService {
         return playerRepo.findById(playerId).orElseThrow(() ->new ResourceNotFound("Player not found with this id: " + playerId));
     }
 
-    public void addPlayer(Player player) {
+    public void addPlayer(PlayerRequest request) {
+        Player player = new Player();
+        player.setName(request.getName());
+        player.setAge(request.getAge());
+        player.setPosition(request.getPosition());
+        player.setJerseyNumber(request.getJerseyNumber());
         playerRepo.save(player);
     }
-    public void updatePlayer(Player player) {
+    public void updatePlayer(int playerId, PlayerRequest request) {
+        Player player = playerRepo.findById(playerId)
+                .orElseThrow(() -> new ResourceNotFound("Player not found with id: " + playerId));
+        player.setName(request.getName());
+        player.setAge(request.getAge());
+        player.setPosition(request.getPosition());
+        player.setJerseyNumber(request.getJerseyNumber());
         playerRepo.save(player);
     }
 
