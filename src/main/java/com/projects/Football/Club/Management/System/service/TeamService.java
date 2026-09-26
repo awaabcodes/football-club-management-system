@@ -1,6 +1,7 @@
 package com.projects.Football.Club.Management.System.service;
 
 
+import com.projects.Football.Club.Management.System.dto.TeamRequest;
 import com.projects.Football.Club.Management.System.entity.Player;
 import com.projects.Football.Club.Management.System.entity.Team;
 import com.projects.Football.Club.Management.System.exception.ResourceNotFound;
@@ -24,10 +25,15 @@ public class TeamService {
     public Team getTeamById(int teamId) {
         return repo.findById(teamId).orElseThrow(() -> new ResourceNotFound("Team:" + teamId + "not found"));
     }
-    public void addTeam( Team team){
+    public void addTeam( TeamRequest teamRequest){
+        Team team = new Team();
+        team.setName(teamRequest.getName());
         repo.save(team);
     }
-    public void updateTeam( Team team){
+    public void updateTeam(int teamId, TeamRequest teamRequest){
+        Team team = repo.findById(teamId).orElseThrow(() -> new ResourceNotFound("Team:" + teamId + "not found"));
+        team.setName(teamRequest.getName());
+        team.setAgeGroup(teamRequest.getAgeGroup());
         repo.save(team);
     }
 
