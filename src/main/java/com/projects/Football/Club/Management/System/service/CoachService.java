@@ -4,18 +4,15 @@ package com.projects.Football.Club.Management.System.service;
 import com.projects.Football.Club.Management.System.dto.CoachRequest;
 import com.projects.Football.Club.Management.System.entity.Coach;
 
-import com.projects.Football.Club.Management.System.entity.Player;
 import com.projects.Football.Club.Management.System.entity.Team;
-import com.projects.Football.Club.Management.System.exception.DuplicateResource;
 import com.projects.Football.Club.Management.System.exception.InvalidOperation;
 import com.projects.Football.Club.Management.System.exception.ResourceNotFound;
 import com.projects.Football.Club.Management.System.repository.CoachRepo;
 import com.projects.Football.Club.Management.System.repository.TeamRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.core.support.RepositoryMethodInvocationListener;
-import org.springframework.http.HttpStatus;
+
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
+
 
 import java.util.List;
 
@@ -27,8 +24,6 @@ public class CoachService {
 
     @Autowired
     TeamRepo teamRepo;
-    @Autowired
-    private RepositoryMethodInvocationListener repositoryMethodInvocationListener;
 
 
     public List<Coach> getAllCoach() {

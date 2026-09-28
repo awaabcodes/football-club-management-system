@@ -41,7 +41,7 @@ public class CoachController {
     }
 
     @PutMapping("/coach/assignCoach/{teamId}/{coachId}")
-    public void assignCoach(int teamId,int coachId){
+    public void assignCoach(@PathVariable int teamId,@PathVariable int coachId){
         coachService.assignCoach(teamId,coachId);
     }
 

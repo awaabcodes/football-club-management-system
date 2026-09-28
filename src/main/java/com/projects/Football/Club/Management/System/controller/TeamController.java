@@ -32,7 +32,7 @@ public class TeamController {
         teamService.addTeam(teamRequest);
     }
 
-    @PutMapping("/team/{playerId}")
+    @PutMapping("/team/{teamId}")
     public void updateTeam(@PathVariable int teamId,@Valid @RequestBody TeamRequest teamRequest){
         teamService.updateTeam(teamId,teamRequest);
     }

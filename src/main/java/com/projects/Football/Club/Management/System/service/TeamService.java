@@ -28,6 +28,7 @@ public class TeamService {
     public void addTeam( TeamRequest teamRequest){
         Team team = new Team();
         team.setName(teamRequest.getName());
+        team.setAgeGroup(teamRequest.getAgeGroup());
         repo.save(team);
     }
     public void updateTeam(int teamId, TeamRequest teamRequest){
