@@ -1,6 +1,7 @@
 package com.projects.Football.Club.Management.System.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
@@ -47,5 +48,6 @@ public class Player {
     private Team team;
 
     @OneToOne(mappedBy = "player")
+    @JsonManagedReference
     private SquadEntry squadEntry;
 }

@@ -1,5 +1,7 @@
 package com.projects.Football.Club.Management.System.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,8 +20,10 @@ public class Squad {
 
     @OneToOne
     @JoinColumn(name = "team_id")
+    @JsonBackReference
     private Team team;
 
     @OneToMany(mappedBy = "squad", fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<SquadEntry> squadEntries;
 }

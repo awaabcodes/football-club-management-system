@@ -1,5 +1,6 @@
 package com.projects.Football.Club.Management.System.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -21,10 +22,12 @@ public class SquadEntry{
 
     @ManyToOne
     @JoinColumn(name = "squad_id")
+    @JsonBackReference
     private Squad squad;
 
     @OneToOne
     @JoinColumn(name = "player_id")
+    @JsonBackReference
     private Player player;
 
     @NotNull
